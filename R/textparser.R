@@ -1,14 +1,16 @@
 
 
 #' @export
-textparser <- function(expr, parser=NULL) {
-  if ( is.null(parser) )
+textparser <- function(expr, parent=NULL) {
+  if ( is.null(parent) )
     envir <- new.env()
   else
-    envir <- environment(parser)$envir
+    envir <- environment(parent)$envir
   eval(substitute(eval(quote({ expr }))), envir)
   parser_names <- Filter(function(x) stringr::str_detect(x, '^parse'), ls(envir=envir))
-  parsers <- lapply(parser_names, function(x) get(x, envir=envir))
+  parsers <- lapply(parser_names, function(x) {
+    get(x, envir=envir)
+  })
   apply_parsers <- function(text) {
     if ( !is.character(text) )
       return(text)

@@ -88,7 +88,7 @@ test_that('it should inherit parser', {
 		parse_factor <- list('^A|E$', function (text, match) {
 			factor(text, levels=c('A', 'E'), labels=c('American', 'European'))
 		})
-	}, parser=parse)
+	}, parent=parse)
 	
 	expect_true(is.factor(parse('E')))
 	expect_equal(as.character(parse('E')), 'European')
