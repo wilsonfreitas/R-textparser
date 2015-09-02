@@ -1,15 +1,15 @@
 Package: textparser
-Title: Compact text parser.
-Version: 0.0.1.9000
+Title: Compact text parser
+Version: 0.0.1
 Authors@R: person("Wilson", "Freitas", ,"wilson.freitas@gmail.com", c("aut", "cre"))
 Description: Transform text into data with simple rules.
-Depends:
-  R (>= 3.2.0)
+Depends: R (>= 3.2.0)
 Imports:
   stringr
 Suggests:
-  testthat
-License: MIT
+  testthat,
+  knitr
+License: MIT + file LICENSE
 LazyData: true
 BugReports: https://github.com/wilsonfreitas/R-textparser/issues
 URL: https://github.com/wilsonfreitas/R-textparser
