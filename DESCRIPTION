@@ -3,7 +3,7 @@ Title: Compact text parser
 Version: 0.0.1
 Authors@R: person("Wilson", "Freitas", ,"wilson.freitas@gmail.com", c("aut", "cre"))
 Description: Transform text into data with simple rules.
-Depends: R (>= 3.2.0)
+Depends: R (>= 3.2.0), methods
 Imports:
   stringr
 Suggests:
