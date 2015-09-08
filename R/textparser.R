@@ -42,7 +42,7 @@ TextParser <- setRefClass("TextParser",
 		},
 		parse=function(x) {
 			if ( is.data.frame(x) ) {
-				as.data.frame(lapply(x, .self$apply_parsers), stringsAsFactors=FALSE)
+				do.call('data.frame', c(lapply(x, .self$apply_parsers), stringsAsFactors=FALSE, check.names=FALSE))
 			} else {
 				.self$apply_parsers(x)
 			}

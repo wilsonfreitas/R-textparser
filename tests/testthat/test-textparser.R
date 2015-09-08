@@ -61,7 +61,7 @@ test_that('transform to factor', {
 	expect_equal(as.character(parser$parse('E')), 'European')
 })
 
-test_that('transform a data.frame', {
+test_that('it should transform a data.frame', {
 	parser <- textparser(
 		parse_factor=parser('^(A|E)$', function (text, match) {
 			factor(text, levels=c('A', 'E'), labels=c('American', 'European'))
@@ -71,13 +71,16 @@ test_that('transform a data.frame', {
 	
 	df <- data.frame(
 		type=c('A', 'E'),
-		strike=c('12', '20'),
+		`strike price`=c('12', '20'),
 		spot=c(12.2, 19.8),
 		series=c('ABC1', 'ABC2'),
-		stringsAsFactors=FALSE
+		stringsAsFactors=FALSE,
+		check.names=FALSE
 	)
+	.names <- names(df)
 	df <- parser$parse(df)
 	expect_equal(unname(sapply(df, class)), c('factor', 'integer', 'numeric', 'character'))
+	expect_equal(names(df), .names)
 })
 
 test_that('it should inherit parser', {
