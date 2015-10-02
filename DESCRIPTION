@@ -1,8 +1,8 @@
-Package: textparser
-Title: Compact text parser
+Package: transmute
+Title: Trasnform data in a bunch using a rule based framework
 Version: 0.0.1
 Authors@R: person("Wilson", "Freitas", ,"wilson.freitas@gmail.com", c("aut", "cre"))
-Description: Transform text into data with simple rules.
+Description: Transform your data creating a set of rules which act on your data reinforcing code maintenance and keeping your code clean.
 Depends: R (>= 3.2.0), methods
 Imports:
   stringr

@@ -1,3 +1,5 @@
-# R-textparser
+# transmute
 
-Compact text parser
+![trans-mute](transmute.png "transmute")
+
+Trasnform data in a bunch using a rule based framework.
