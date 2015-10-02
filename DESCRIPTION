@@ -11,6 +11,6 @@ Suggests:
   knitr
 License: MIT + file LICENSE
 LazyData: true
-BugReports: https://github.com/wilsonfreitas/R-textparser/issues
-URL: https://github.com/wilsonfreitas/R-textparser
+BugReports: https://github.com/wilsonfreitas/transmute/issues
+URL: https://github.com/wilsonfreitas/transmute
 VignetteBuilder: knitr
