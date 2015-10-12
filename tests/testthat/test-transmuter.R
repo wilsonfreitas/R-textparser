@@ -108,3 +108,17 @@ test_that('it should inherit parser', {
 	expect_true(is.integer(trm2$transmute('10')))
 	expect_true(trm2$transmute('10') == 10)
 })
+
+test_that('it should parse sign', {
+	trm <- transmuter(
+		match_regex('\\+|-', function(text, match) {
+			idx <- text == '-'
+			x <- rep(1, length(text))
+			x[idx] <- -1
+			x
+		})
+	)
+	expect_equal(trm$transmute('+'), 1)
+	expect_equal(trm$transmute('-'), -1)
+	expect_equal(trm$transmute(c('-', '+')), c(-1, 1))
+})
