@@ -41,6 +41,14 @@ match_class <- function(class, handler, priority=NA, na.rm=TRUE) {
 	)
 }
 
+#' @export
+match_predicate <- function(predicate, handler, priority=NA, na.rm=TRUE) {
+	structure(
+		list(predicate=predicate, handler=handler, priority=priority, na.rm=na.rm),
+		class=c('match_rule', 'predicate_rule')
+	)
+}
+
 apply_rule <- function(rule, .data) {
 	UseMethod('apply_rule')
 }
@@ -49,6 +57,14 @@ apply_rule.class_rule <- function(rule, .data) {
 	if ( ! is(.data, rule$class) )
 		return(rule_result())
 	result <- rule$handler(.data)
+	rule_result(TRUE, result)
+}
+
+apply_rule.predicate_rule <- function(rule, .data) {
+	idx <- rule$predicate(.data)
+	if ( length(which(idx)) == 0 )
+		return(rule_result())
+	result <- rule$handler(.data, idx)
 	rule_result(TRUE, result)
 }
 

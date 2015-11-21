@@ -130,3 +130,22 @@ test_that('it should create a transmuter with a match_class rule', {
 	expect_equal(trm$transmute('1'), '1')
 	expect_equal(trm$transmute(as.Date('2015-11-21')), '2015-11-21')
 })
+
+
+test_that('it should create a transmuter with a match_predicate rule', {
+	trm <- transmuter(
+		match_predicate(is.na, function(x, idx, ...) {
+			x[idx] <- 0
+			x
+		})
+	)
+	expect_equal(trm$transmute('1'), '1')
+	expect_equal(trm$transmute(NA), 0)
+	expect_equal(trm$transmute(c(NA, 1)), c(0, 1))
+	
+	df <- data.frame(
+		var=c(NA, 1)
+	)
+	df <- trm$transmute(df)
+	expect_equal(df$var, c(0, 1))
+})

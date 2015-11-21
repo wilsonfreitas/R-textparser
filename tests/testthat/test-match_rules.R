@@ -89,6 +89,24 @@ test_that('it should apply a class_rule', {
   expect_false(result$applied)
 
   result <- apply_rule(rule, as.Date('2015-11-21'))
-  expect_true(result$applied) # regex_rule only handles character data
+  expect_true(result$applied)
   expect_equal(result$value, '2015-11-21')
+})
+
+test_that('it should apply a pred_rule', {
+  rule <- match_predicate(is.na, function(x, idx, ...) {
+  	x[idx] <- 0
+		x
+  })
+
+  result <- apply_rule(rule, '11')
+  expect_is(result, 'rule_result')
+  expect_false(result$applied)
+
+  result <- apply_rule(rule, NA)
+  expect_true(result$applied)
+  expect_equal(result$value, 0)
+
+  result <- apply_rule(rule, c(NA, 1))
+  expect_equal(result$value, c(0, 1))
 })
