@@ -21,11 +21,11 @@ test_that('it should create a transmuter using Transmuter constructor', {
 	# 		as.character,
 	# 		use_regex=FALSE
 	# 	),
-	# 	format_by_content=match_function(
-	# 		is.na,
-	# 		function(x) 0,
-	# 		priority(9)
-	# 	)
+	# format_by_content=match_function(
+	# 	is.na,
+	# 	function(x) 0,
+	# 	priority(9)
+	# )
 	# )
 	# expect_true(is(trm, 'transmuter'))
 	# expect_equal(trm$transmute('1'), 1)
@@ -121,4 +121,12 @@ test_that('it should parse sign', {
 	expect_equal(trm$transmute('+'), 1)
 	expect_equal(trm$transmute('-'), -1)
 	expect_equal(trm$transmute(c('-', '+')), c(-1, 1))
+})
+
+test_that('it should create a transmuter with a match_class rule', {
+	trm <- transmuter(
+		match_class('Date', as.character)
+	)
+	expect_equal(trm$transmute('1'), '1')
+	expect_equal(trm$transmute(as.Date('2015-11-21')), '2015-11-21')
 })

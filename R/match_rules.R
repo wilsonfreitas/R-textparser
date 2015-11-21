@@ -33,8 +33,23 @@ match_regex <- function(regex, handler, priority=NA, apply_to=c('any', 'all'), n
 	)
 }
 
+#' @export
+match_class <- function(class, handler, priority=NA, na.rm=TRUE) {
+	structure(
+		list(class=class, handler=handler, priority=priority, na.rm=na.rm),
+		class=c('match_rule', 'class_rule')
+	)
+}
+
 apply_rule <- function(rule, .data) {
 	UseMethod('apply_rule')
+}
+
+apply_rule.class_rule <- function(rule, .data) {
+	if ( ! is(.data, rule$class) )
+		return(rule_result())
+	result <- rule$handler(.data)
+	rule_result(TRUE, result)
 }
 
 apply_rule.regex_rule <- function(rule, .data) {

@@ -74,3 +74,21 @@ test_that('it should iterate thru a list of rules ', {
   rules <- iter_rules(rules)
   expect_equal(take(rules, 'regex'), c('1', '2', 'NA', 'NA2'))
 })
+
+test_that('it should create a check class_rule', {
+  rule <- match_class('Date', as.character)
+  expect_is(rule, 'match_rule')
+  expect_is(rule, 'class_rule')
+})
+
+test_that('it should apply a class_rule', {
+  rule <- match_class('Date', as.character)
+
+  result <- apply_rule(rule, '11')
+  expect_is(result, 'rule_result')
+  expect_false(result$applied)
+
+  result <- apply_rule(rule, as.Date('2015-11-21'))
+  expect_true(result$applied) # regex_rule only handles character data
+  expect_equal(result$value, '2015-11-21')
+})
