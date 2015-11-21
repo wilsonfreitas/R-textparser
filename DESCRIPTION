@@ -2,20 +2,24 @@ Package: transmute
 Title: Trasnform data in a bunch using a rule based framework
 Version: 0.0.1
 Authors@R: person("Wilson", "Freitas", ,"wilson.freitas@gmail.com", c("aut", "cre"))
-Description: Transform your data creating a set of rules which act on your data reinforcing code maintenance and keeping your code clean.
-Depends: R (>= 3.2.0), methods
+Description: Transform your data creating a set of rules which act on your data
+    reinforcing code maintenance and keeping your code clean.
+Depends:
+    R (>= 3.2.0),
+    methods
 Imports:
-  stringr
+    stringr
 Suggests:
-  testthat,
-  knitr
+    testthat,
+    knitr
 Collate:
-  'util.R'
-  'match_rules.R'
-  'transmuter.R'
-  'unformat.R'
+    'util.R'
+    'match_rules.R'
+    'transmuter.R'
+    'unformat.R'
 License: MIT + file LICENSE
 LazyData: true
 BugReports: https://github.com/wilsonfreitas/transmute/issues
 URL: https://github.com/wilsonfreitas/transmute
 VignetteBuilder: knitr
+RoxygenNote: 5.0.0
