@@ -24,12 +24,9 @@ Transmuter <- setRefClass("Transmuter",
 			for (.rule in iter_rules(.self$rules)) {
 				res <- apply_rule(.rule, .data)
 				if (res$applied)
-					break
+					return(res$value)
 			}
-			if (res$applied)
-				res$value
-			else
-				.data
+			.data
 		},
 		transmute=function(x) {
 			if ( is(x, 'data.frame') ) {
