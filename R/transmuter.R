@@ -1,5 +1,5 @@
 
-#' Trasnform data in a bunch using a rule based framework.
+#' Transform data in a bunch using a rule based framework.
 #'
 #' Transform your data creating a set of rules which act on your data
 #' reinforcing code maintenance and keeping your code clean.
