@@ -15,39 +15,62 @@ NULL
 }
 
 #' @export
-#' @importFrom methods setRefClass
-Transmuter <- setRefClass("Transmuter",
-	fields=list(envir="environment", rules="list"),
-	methods=list(
-		apply_rules=function(.data) {
-			res <- rule_result()
-			for (.rule in iter_rules(.self$rules)) {
-				res <- apply_rule(.rule, .data)
-				if (res$applied)
-					return(res$value)
-			}
-			.data
-		},
-		transmute=function(x) {
-			if ( is(x, 'data.frame') ) {
-				do.call('data.frame', c(lapply(x, .self$apply_rules), stringsAsFactors=FALSE, check.names=FALSE))
-			} else {
-				.self$apply_rules(x)
-			}
-		},
-		print=function() {
-			pl <- take(.self$rules, 'priority')
-			l <- list()
-			i <- 1
-			for (.po in order(pl)) {
-				.names <- names(.self$rules)
-				.parser <- .self$rules[[.po]]
-				l[[i]] <- c('name'=.names[.po], 'regex'=.parser[[1]], 'priority'=.parser[['priority']])
-				i <- i + 1
-			}
-			base::print(as.data.frame(do.call(rbind, l)), row.names=FALSE, right=FALSE, na.print="-")
+setClass("Transmuter",
+	representation(envir="environment", rules="list"),
+	prototype(envir=NULL, rules=NULL)
+)
+
+#' @export
+setGeneric("transmute", function(x, data, ...) standardGeneric("transmute"))
+
+#' @export
+setGeneric("apply_rules", function(x, data, ...) standardGeneric("apply_rules"))
+
+#' @export
+setMethod("apply_rules",
+	signature("Transmuter", "ANY"),
+	function(x, data) {
+		res <- rule_result()
+		for (.rule in iter_rules(x@rules)) {
+			res <- apply_rule(.rule, data)
+			if (res$applied)
+				return(res$value)
 		}
-	)
+		data
+	}
+)
+
+#' @export
+setMethod("transmute",
+	signature("Transmuter", "data.frame"),
+	function(x, data) {
+		rules_res <- lapply(data, function(.data) apply_rules(x, .data))
+		do.call('data.frame', c(rules_res, stringsAsFactors=FALSE, check.names=FALSE))
+	}
+)
+
+#' @export
+setMethod("transmute",
+	signature("Transmuter", "ANY"),
+	function(x, data) apply_rules(x, data)
+)
+
+#' @export
+setMethod("print",
+	signature(x="Transmuter"),
+	function(x, ...) {
+		pl <- take(x@rules, 'priority')
+		l <- list()
+		i <- 1
+		for (.po in order(pl)) {
+			.names <- names(x@rules)
+			.parser <- x@rules[[.po]]
+			l[[i]] <- c('name'=.names[.po], 'regex'=.parser[[1]], 'priority'=.parser[['priority']])
+			i <- i + 1
+		}
+		print.data.frame(as.data.frame(do.call(rbind, l)), row.names=FALSE, right=FALSE, na.print="-")
+		invisible(x)
+	}
 )
 
 #' @export
@@ -60,24 +83,9 @@ transmuter <- function(...) {
 	idx <- sapply(objs, function(x) is(x, 'Transmuter'))
 	parents <- objs[idx]
 	for (parent in parents) {
-		rules <- append(rules, parent$rules)
+		rules <- append(rules, slot(parent, 'rules'))
 	}
-	
-	Transmuter$new(envir=new.env(), rules=rules)
+
+	new("Transmuter", envir=new.env(), rules=rules)
 }
 
-#' @export
-print.Transmuter <- function(x, ...) {
-	x$print()
-}
-
-# #' @export
-# transmute <- function(...) {
-# 	UseMethod('transmute')
-# }
-#
-# #' @export
-# transmute.data.frame <- function(data, ...) {
-# 	.parser <- transmuter.default(NULL, ...)
-# 	.parser$parse(data)
-# }

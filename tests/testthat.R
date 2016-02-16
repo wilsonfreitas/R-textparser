@@ -1,4 +1,4 @@
 library(testthat)
-library(textparser)
+library(transmute)
 
-test_check("textparser")
+test_check("transmute")
