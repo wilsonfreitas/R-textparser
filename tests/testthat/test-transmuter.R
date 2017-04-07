@@ -76,7 +76,7 @@ test_that('it should transform a data.frame', {
 	)
 	.names <- names(df)
 	df <- transmute(trm, df)
-	expect_equal(unname(sapply(df, class)), c('factor', 'integer', 'numeric', 'character'))
+	expect_equal(unname(sapply(df, class)), c('factor', 'integer', 'numeric', 'character', 'Date'))
 	expect_equal(names(df), .names)
 })
 
@@ -144,7 +144,7 @@ test_that('it should create a transmuter with a match_predicate rule', {
 	expect_equal(transmute(trm, '1'), '1')
 	expect_equal(transmute(trm, NA), 0)
 	expect_equal(transmute(trm, c(NA, 1)), c(0, 1))
-	
+
 	df <- data.frame(
 		var=c(NA, 1)
 	)
@@ -159,4 +159,11 @@ test_that('it should transmute data with transmute function', {
 	expect_equal(transmute(trm, '1'), 1)
 	expect_equal(transmute(trm, 'a'), 'a')
 	expect_equal(transmute(trm, '1.1'), '1.1')
+})
+
+test_that('it should transmute data with direct transmute_regex function', {
+  expect_equal(transmute_regex('1', '^\\d+$', as.integer), 1)
+  expect_is(transmute_regex('1', '^\\d+$', as.integer), 'integer')
+  expect_equal(transmute_regex('a', '^\\d+$', as.integer), 'a')
+  expect_equal(transmute_regex('1.1', '^\\d+$', as.integer), '1.1')
 })

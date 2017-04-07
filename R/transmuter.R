@@ -89,3 +89,9 @@ transmuter <- function(...) {
 	new("Transmuter", envir=new.env(), rules=rules)
 }
 
+#' @export
+transmute_regex <- function(.x, .r, .f, apply_to = c('any', 'all')) {
+  trm <- transmuter(match_regex(.r, .f, apply_to = apply_to))
+  transmute(trm, .x)
+}
+
