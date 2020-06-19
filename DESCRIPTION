@@ -17,6 +17,7 @@ Collate:
     'match_rules.R'
     'transmuter.R'
     'unformat.R'
+    'transmute-functions.R'
 License: MIT + file LICENSE
 LazyData: true
 BugReports: https://github.com/wilsonfreitas/transmute/issues
