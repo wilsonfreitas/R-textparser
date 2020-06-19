@@ -29,5 +29,5 @@ test_that("it should convert character to numeric using functions", {
   expect_equal(as_dbl("1.001,5", dec = ",", thousands = "."), 1001.5)
   expect_equal(as_dbl("1.001.001,5", dec = ",", thousands = "."), 1001001.5)
   expect_equal(as_dbl("5,5 %", dec = ",", percent = TRUE), 0.055)
-  expect_equal(h("5.5 %", percent = TRUE), 0.055)
+  expect_equal(as_dbl("5.5 %", percent = TRUE), 0.055)
 })

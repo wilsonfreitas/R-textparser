@@ -5,8 +5,8 @@ take <- function(x, ...) {
 }
 
 #' @export
-take.list <- function(l, k) {
-	sapply(l, function(x) {
+take.list <- function(x, k, ...) {
+	sapply(x, function(x) {
 		v <- x[[k]]
 		if (is.null(v))
 			NA

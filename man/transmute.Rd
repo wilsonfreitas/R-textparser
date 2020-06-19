@@ -3,10 +3,8 @@
 \docType{package}
 \name{transmute}
 \alias{transmute}
-\alias{transmute-package}
 \title{Transform data in a bunch using a rule based framework.}
 \description{
 Transform your data creating a set of rules which act on your data
 reinforcing code maintenance and keeping your code clean.
 }
-

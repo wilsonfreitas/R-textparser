@@ -8,6 +8,7 @@
 #' @docType package
 #'
 #' @import stringr
+#' @import methods
 NULL
 
 `%or%` <- function(value, other) {
